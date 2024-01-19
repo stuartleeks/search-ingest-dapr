@@ -46,7 +46,7 @@ With the following ingestion parameters:
 - `searchitems_folder_path` - the path in above container where SearchIndexItems are stored, as configured in your Azure AI Search DataSource
 - `searchindexer_name` - the name of the search indexer to use. This will be created if it doesn't exist yet
 
-> To access the batcher in the kubernetes cluster, port-forward port 6000 using: `kubectl port-forward batcher-podid 6000:6000`
+> To access the batcher in the kubernetes cluster, port-forward port 6000 using: `kubectl port-forward $(kubectl get pods --selector='app==batcher' --output jsonpath='{.items[0].metadata.name}') 6000:6000`
 
 ## Cleaning up Dapr logs
 
