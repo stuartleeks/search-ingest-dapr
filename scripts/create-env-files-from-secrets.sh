@@ -59,6 +59,10 @@ EOF
 echo "CREATED: k8s redis secret file"
 
 
+INSTRUMENTATION_KEY="$instrumentation_key" envsubst < "$script_dir/../components-k8s/open-telemetry-collector-appinsights.yaml.template" > "$script_dir/../components-k8s/open-telemetry-collector-appinsights.secret.yaml"
+echo "CREATED: k8s otel secret file"
+
+
 OUTPUT_SECRET_FILE="$script_dir/../components-k8s/k8s.secret.yaml"
 
 # Extract the 'secretstore' object from the input JSON file

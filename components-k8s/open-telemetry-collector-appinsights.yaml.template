@@ -8,8 +8,14 @@ metadata:
 data:
   otel-collector-config: |
     receivers:
+      otlp:
+        protocols:
+          grpc:
+          http:
       zipkin:
         endpoint: 0.0.0.0:9411
+    processors:
+      batch:
     extensions:
       health_check:
       pprof:
@@ -17,7 +23,7 @@ data:
       zpages:
         endpoint: :55679
     exporters:
-      logging:
+      debug:
         verbosity: detailed
       azuremonitor:
         endpoint: "https://dc.services.visualstudio.com/v2/track"
@@ -32,15 +38,25 @@ data:
       extensions: [pprof, zpages, health_check]
       pipelines:
         traces:
-          receivers: [zipkin]
-          exporters: [azuremonitor,logging]
+          # receivers: [zipkin]
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [azuremonitor,debug]
+        metrics:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [azuremonitor, debug]
+        logs:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [azuremonitor, debug]
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: otel-collector
   labels:
-    app: opencesus
+    app: opencensus
     component: otel-collector
 spec:
   ports:
@@ -71,7 +87,7 @@ spec:
     spec:
       containers:
       - name: otel-collector
-        image: otel/opentelemetry-collector-contrib:0.77.0
+        image: otel/opentelemetry-collector-contrib:0.88.0
         command:
           - "/otelcol-contrib"
           - "--config=/conf/otel-collector-config.yaml"
