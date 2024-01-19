@@ -31,6 +31,8 @@ components=(
 
 # Iterate over components and use the build_and_push function for each
 for component in "${components[@]}"; do
+    echo ""
+    echo "### Building and pushing $component ###"
     docker build --platform linux/amd64  -t "$acr_login_server/$component" src/$component
     docker push "$acr_login_server/$component"
 done
