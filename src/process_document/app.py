@@ -46,6 +46,7 @@ def subscribe():
 @app.route("/process-document", methods=["POST"])
 def process_page_subscriber():
     event = from_http(request.headers, request.get_data())
+    print(f"🔍🔍🔍Received event with type {event['type']}. Headers: {request.headers}", flush=True)
 
     ingestion_id = event.data["ingestion_id"]
     doc_id = event.data["doc_id"]

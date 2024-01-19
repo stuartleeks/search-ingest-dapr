@@ -43,6 +43,7 @@ def subscribe():
 @app.route("/generate-keyphrases", methods=["POST"])
 def generate_keyphrases_subscriber():
     event = from_http(request.headers, request.get_data())
+    print(f"🔍🔍🔍Received event with type {event['type']}. Headers: {request.headers}", flush=True)
     data = json.loads(event.data)
 
     ingestion_id = data["ingestion_id"]
