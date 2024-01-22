@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnet-publisher
+  labels:
+    app: dotnet-publisher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dotnet-publisher
+  template:
+    metadata:
+      labels:
+        app: dotnet-publisher
+      annotations:
+        # https://docs.dapr.io/reference/arguments-annotations-overview/
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "dotnet-publisher"
+        dapr.io/app-port: "5264"
+        dapr.io/config: "appconfig"
+        dapr.io/enable-api-logging: "true"
+        dapr.io/log-as-json: "true"
+        dapr.io/log-level: "debug"
+        # prometheus.io/scrape: "true"
+        # prometheus.io/port: "9090"
+        # prometheus.io/path: "/"
+    spec:
+      serviceAccountName: dotnet-publisher
+      containers:
+      - name: dotnet-publisher
+        image: $REGISTRY_NAME/dotnet-publisher:latest
+        env:
+        ports:
+        - containerPort: 5264
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dotnet-publisher
+  namespace: default

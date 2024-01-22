@@ -42,3 +42,9 @@ subjects:
 - kind: ServiceAccount
   name: process-document
   namespace: default
+- kind: ServiceAccount
+  name: dotnet-publisher
+  namespace: default
+- kind: ServiceAccount
+  name: dotnet-subscriber
+  namespace: default

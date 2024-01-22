@@ -23,6 +23,10 @@
 			"installTools": true,
 			"version": "3.11"
 		}
+		,"ghcr.io/devcontainers/features/dotnet": {
+            "version": "7.0",
+            "includeAll": true
+        }
 	}
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -39,7 +43,8 @@
 				"ms-azuretools.vscode-dapr",
 				"ms-python.black-formatter",
 				"humao.rest-client",
-				"yzhang.markdown-all-in-one"
+				"yzhang.markdown-all-in-one",
+				"ms-dotnettools.csdevkit"
 			]
 		}
 	},

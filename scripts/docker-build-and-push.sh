@@ -27,6 +27,8 @@ components=(
     "generate_keyphrases"
     "generate_summaries"
     "process_document"
+    "dotnet-publisher"
+    "dotnet-subscriber"
 )
 
 # Iterate over components and use the build_and_push function for each
