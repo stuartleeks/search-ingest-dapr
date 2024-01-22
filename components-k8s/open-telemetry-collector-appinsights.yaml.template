@@ -11,11 +11,13 @@ data:
       otlp:
         protocols:
           grpc:
+            endpoint: 0.0.0.0:4317
           http:
+            endpoint: 0.0.0.0:4318
       zipkin:
         endpoint: 0.0.0.0:9411
-    processors:
-      batch:
+    #processors:
+    #  batch:
     extensions:
       health_check:
       pprof:
@@ -40,15 +42,15 @@ data:
         traces:
           # receivers: [zipkin]
           receivers: [otlp]
-          processors: [batch]
+          # processors: [batch]
           exporters: [azuremonitor,debug]
         metrics:
           receivers: [otlp]
-          processors: [batch]
+          # processors: [batch]
           exporters: [azuremonitor, debug]
         logs:
           receivers: [otlp]
-          processors: [batch]
+          # processors: [batch]
           exporters: [azuremonitor, debug]
 ---
 apiVersion: v1
@@ -64,6 +66,14 @@ spec:
     port: 9411
     protocol: TCP
     targetPort: 9411
+  - name: grpc-otlp
+    port: 4317
+    targetPort: 4317
+    protocol: TCP
+  - name: http-otlp
+    port: 4318
+    targetPort: 4318
+    protocol: TCP
   selector:
     component: otel-collector
 ---
