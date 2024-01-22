@@ -8,16 +8,8 @@ metadata:
 data:
   otel-collector-config: |
     receivers:
-      otlp:
-        protocols:
-          grpc:
-            endpoint: 0.0.0.0:4317
-          http:
-            endpoint: 0.0.0.0:4318
       zipkin:
         endpoint: 0.0.0.0:9411
-    #processors:
-    #  batch:
     extensions:
       health_check:
       pprof:
@@ -40,18 +32,8 @@ data:
       extensions: [pprof, zpages, health_check]
       pipelines:
         traces:
-          # receivers: [zipkin]
-          receivers: [otlp]
-          # processors: [batch]
+          receivers: [zipkin]
           exporters: [azuremonitor,debug]
-        metrics:
-          receivers: [otlp]
-          # processors: [batch]
-          exporters: [azuremonitor, debug]
-        logs:
-          receivers: [otlp]
-          # processors: [batch]
-          exporters: [azuremonitor, debug]
 ---
 apiVersion: v1
 kind: Service
