@@ -86,7 +86,7 @@ def subscribe():
 @app.route("/document-completed", methods=["POST"])
 def document_completed_subscriber():
     event = from_http(request.headers, request.get_data())
-    print(f"🔍🔍🔍Received event with type {event['type']}. Headers: {request.headers}", flush=True)
+    print(f"🔍🔍🔍Received event with type {event['type']}. Headers: {request.headers}: Event: {event}", flush=True)
     data = json.loads(event.data)
 
     ingestion_id = data["ingestion_id"]
